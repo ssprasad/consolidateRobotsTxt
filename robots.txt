@@ -12,6 +12,7 @@ Disallow: /*SEARCH_GO*
 Disallow: /mkt.xpml*
 Disallow: /*sc=1
 Disallow: /*fc--true
+Disallow: /?rf=sur
 Disallow: /*wvsessionid
 Disallow: /mybizrate/
 Disallow: /email/
@@ -86,7 +87,6 @@ Disallow: /miscellaneous-dvds-videos/
 Disallow: /action-adventure-dvds-videos/
 Disallow: /free_shipping_forever_promo_blue
 Disallow: /free_shipping_forever_promo_black
-
 Disallow: /animal-nature-books/
 Disallow: /antiques-collectibles-books/
 Disallow: /architecture-books/
@@ -179,32 +179,8 @@ Disallow: /westerns-books/
 Disallow: /work-the-workplace-books/
 
 
-User-agent: Googlebot
-Disallow: /?rf=sur
-
-
-
-User-agent: msnbot
-Disallow:
-
-User-agent: bingbot
-Disallow:
-
-User-agent: slurp
-Disallow:
-
 User-agent: AdsBot-Google
 Disallow: /rd
 Disallow: /rd2
 Disallow: /color_bumper.xpml
-
-#
-# Crawlers that are kind enough to obey, but which we'd rather not have.
-# 
-User-Agent: YahooSeeker
-Disallow: /
-
-
-User-agent: BecomeBot
-Disallow: /
 

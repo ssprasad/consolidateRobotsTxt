@@ -28,6 +28,8 @@ public class ConsolidateRobotsTxt {
     private static final String ROBOTS_FILE_NAME = "robots.txt";
     private static final String USER_AGENT_PREFIX = "User-agent:";
     private static final String DISALLOW_PREFIX = "Disallow:";
+    private static final String ALLOW_PREFIX = "Allow:";
+    private static final String SITEMAP_PREFIX = "Sitemap:";
     private static final String ALL_ROBOTS = USER_AGENT_PREFIX + " *";
     private static final String COMMENT_PREFIX = "#";
 
@@ -99,27 +101,23 @@ public class ConsolidateRobotsTxt {
 
     private static void writeContent(BufferedWriter out) throws IOException {
         for (String bot : bots.keySet()) {
-            out.write(bot);
-            out.newLine();
-            if (bot.startsWith(USER_AGENT_PREFIX)) {
-                List<String> disallowedList = bots.get(bot);
-
-                boolean disallowAdded = false;
+            List<String> disallowedList = bots.get(bot);
+            if (bot.startsWith(USER_AGENT_PREFIX) && !disallowedList.isEmpty()) {
+                boolean firstValidLineFoundToWrite = false;
                 for (String line : disallowedList) {
-                    if (line.startsWith(DISALLOW_PREFIX)) {
-                        disallowAdded = true;
+                    if ((line.startsWith(DISALLOW_PREFIX) || line.startsWith(ALLOW_PREFIX) || line.startsWith(SITEMAP_PREFIX))
+                            && !firstValidLineFoundToWrite) {
+                        firstValidLineFoundToWrite = true;
+                        // Make the User-agent entry here
+                        out.write(bot);
+                        out.newLine();
                     }
 
                     // Disallow Prefix should come after user agent line.
-                    if (disallowAdded) {
+                    if (firstValidLineFoundToWrite) {
                         out.write(line);
                         out.newLine();
                     }
-                }
-
-                if (disallowedList.isEmpty() || !disallowAdded) {
-                    out.write(DISALLOW_PREFIX);
-                    out.newLine();
                 }
 
                 out.newLine();
